@@ -35,7 +35,7 @@ client.subscribe('/client/**', function(msg) {
 });
 
 /**
- * Web server
+ * Web Server
  */
 
 // Setup Express
