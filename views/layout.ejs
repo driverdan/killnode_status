@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Kill.Node - A location-aware, NodeJS powered game of assassination</title>
+  <meta name="description" content="Kill.Node is a location-aware assasination game.">
+  <meta name="author" content="Dan DeFelippi, Ben Hughes, Adam Lindsay, David Moffitt">
+	<meta name="keywords" content="" />
+	<meta name="robots" content="all" />
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="7 days" />
+	<meta name="version" content="1.0" />
+	<meta name="copyright" content="Dan DeFelippi, Ben Hughes, Adam Lindsay, David Moffitt" />
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+	<link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/homeicon.png"/>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/typography.css" />
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script>!window.jQuery && document.write('<script src="js/jquery-1.4.2.min.js"><\/script>')</script>
+
+  <script src="/js/cufon-yui.js"></script>
+	<script src="/js/raphael-min.js"></script>
+  <script src="/js/Lixel.font.js"></script>
+  <script src="/js/raphael.shapes.js"></script>
+	<script src="/js/polymaps.min.js"></script>
+  <script src="/js/pk.js"></script>
+  <script src="/js/pk.io.js"></script>
+  <script src="/js/pk.location.js"></script>
+  <script src="/js/pk.map.js"></script>
+	<script src="/js/jquery.innerfade.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/faye-browser-min.js"></script>
+</head>
+<body>
+	
+	<!-- container -->
+	<div id="container">
+		<!-- wrapper -->
+		<div id="main">
+      <%- body %>
+		</div>
+		<!-- // wrapper -->
+	</div>
+	<!-- // container -->
+
+
+  <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+  <!--script>
+   var _gaq = [['_setAccount', '123456'], ['_trackPageview']];
+   (function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = '//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+   })(document, 'script');
+  </script-->
+</body>
+</html>
