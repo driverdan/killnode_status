@@ -19,6 +19,12 @@ var sys   = require('sys')
 // killnode URL for incoming messages
 var serverUrl = 'http://killnode.com/faye';
 
+// IP and port can be passed on command line
+// eg: node server.js 23.45.67.89 80
+// Dan's Server IP: 76.73.85.37
+var serverIp    = process.argv[2] || '127.0.0.1';
+var serverPort  = process.argv[3] || 8080);
+
 /**
  * Web Server
  */
@@ -52,8 +58,7 @@ app.error(function(err, req, res, next) {
   }
 });
 
-var port = parseInt(process.env['PORT'] || 80);
-app.listen(port);
+app.listen(serverPort, serverIp);
 
 
 /**
