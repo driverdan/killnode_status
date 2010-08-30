@@ -202,19 +202,10 @@ h5 {
 	padding:0;
 	margin:0 auto; }
 
-.game #container {
-    background: transparent;
-}
-
-.game #main {
-    width:100%;
-    margin:0;
-}
-
 .header {
 	position:relative;
 	width:960px;
-	height:433px;
+	height:110px;
 	padding:0;
 	margin:0 auto; }
 
@@ -688,6 +679,7 @@ div.col2 .testimonial p {
 	position: relative;
 	width: 97%;
 	margin:0 auto;
+	bottom: -1em;
 	padding:20px 0; }
 
 .footer .twitter {
