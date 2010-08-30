@@ -3,6 +3,9 @@
  * Creates and manages NPCs using foursquare's API.
  */
 
+require.paths.unshift(__dirname + "/lib");
+require.paths.unshift(__dirname + "/lib/express/support");
+
 var sys   = require('sys')
     ,connect = require('connect')
     ,express = require('express')
@@ -15,24 +18,6 @@ var sys   = require('sys')
 
 // killnode URL for incoming messages
 var serverUrl = 'http://killnode.com/faye';
-
-/**
- * Kill.Node client
- */
-var client = new Faye.Client(serverUrl);
-
-// Subscribe to all channels
-client.subscribe('/client/**', function(msg) {
-  var channel = msg.channel.split('/');
-  
-  if (channel.length > 2 && actions[channel[3]]) {
-    var output = actions[channel[3]](msg);
-    
-    if (output) {
-      console.log((new Date()).toString() + ": " + output);
-    }
-  }
-});
 
 /**
  * Web Server
@@ -67,10 +52,52 @@ app.error(function(err, req, res, next) {
   }
 });
 
-
 var port = parseInt(process.env['PORT'] || 80);
-
 app.listen(port);
+
+
+/**
+ * Rebroadcast game status
+ */
+
+var bayeux = new Faye.NodeAdapter({mount: '/faye', timeout: 45});
+bayeux.attach(app);
+
+var client = bayeux.getClient();
+
+
+/**
+ * Kill.Node client
+ */
+var knClient = new Faye.Client(serverUrl);
+
+// Subscribe to all channels
+knClient.subscribe('/client/**', function(msg) {
+  var channel = msg.channel.split('/');
+  
+  if (channel.length > 2 && actions[channel[3]]) {
+    var output = actions[channel[3]](msg);
+    
+    if (output) {
+      var datetime = (new Date()).toString();
+      console.log(datetime + ": " + output);
+      client.publish("/game/updates", {date: datetime, update: output});
+    }
+  }
+});
+
+// Server routes
+app.get('/', function(req, res) {
+  res.render('index.ejs', {
+    locals : {
+      title: 'Rochester.js',
+      params: {}
+    }
+  });
+});
+
+
+// Server errors / missing files
 
 app.get('/500', function(req, res){
   throw new Error('This is a 500 Error');
@@ -87,12 +114,3 @@ function NotFound(msg) {
 }
 
 console.log('Listening on http://0.0.0.0:' + port);
-
-/**
- * Rebroadcast game status
- */
-
-var bayeux = new faye.NodeAdapter({
-  mount:    '/faye',
-  timeout:  45
-});
