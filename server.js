@@ -23,7 +23,7 @@ var serverUrl = 'http://killnode.com/faye';
 // eg: node server.js 23.45.67.89 80
 // Dan's Server IP: 76.73.85.37
 var serverIp    = process.argv[2] || '127.0.0.1';
-var serverPort  = process.argv[3] || 8080);
+var serverPort  = process.argv[3] || 8080;
 
 /**
  * Web Server
@@ -31,9 +31,9 @@ var serverPort  = process.argv[3] || 8080);
 
 // Setup Express
 var app = module.exports = express.createServer(
-  express.logger(),
-  express.cookieDecoder(),
-  express.session()
+  express.logger()
+  ,express.cookieDecoder()
+  ,express.session()
 );
 
 app.configure(function() {
@@ -118,4 +118,4 @@ function NotFound(msg) {
   Error.captureStackTrace(this, arguments.callee);
 }
 
-console.log('Listening on http://0.0.0.0:' + port);
+console.log('Listening on http://' + serverIp + ':' + serverPort);

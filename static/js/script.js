@@ -1,17 +1,24 @@
 $(function() {
-  Faye.Logging.logLevel = 'debug';
-  var client = new Faye.Client('/faye', {timeout: 120});
+  var client = new Faye.Client('/faye', {timeout: 120})
+      ,$updates = $("#updates");
   
+  // Subscribe to all game updates
   client.subscribe('/game/updates', function(msg) {
-    if (!$("#updates ul").length) {
-      $("#updates").html("<ul>");
+    if (!$updates.find("ul").length) {
+      $updates.html("<ul>");
     }
     
-    var $li = $('<li style="display:none"><strong>' + msg.date + ":</strong> " + msg.update + "</li>");
+    var $ul = $updates.find("ul")
+        ,$li = $('<li style="display:none"><strong>' + (new Date(msg.date)).toString() + ":</strong> " + msg.update + "</li>");
     
-    $("#updates ul").prepend($li);
+    $ul.prepend($li);
     $li.slideDown();
     
-    console.log("game update", msg);
+    // Prune list when it gets long
+    if ($ul.find("li").length > 25) {
+      $ul.find("li:last").slideUp(function() {
+        $(this).remove();
+      });
+    }
   });
 });

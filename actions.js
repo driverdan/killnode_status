@@ -1,6 +1,11 @@
 var actions = {
   // Save pending kills
-  pendingKills: {}
+  kills: {
+    pending: {}
+    ,attempts: 0
+    ,success: 0
+  }
+  
   
   // Player connects
   ,initialize: function (data) {
@@ -17,7 +22,8 @@ var actions = {
     var player = data.channel.split('/')[2];
     
     // Save the kill
-    this.pendingKills[data.target_username] = player;
+    this.kills.pending[data.target_username] = player;
+    this.kills.attempts++;
     
     return (player + ' is attempting to kill ' + data.target_username + '.');
   }
@@ -25,9 +31,11 @@ var actions = {
   ,kill: function(data) {
     var target = data.channel.split('/')[2];
     
-    if (this.pendingKills[target]) {
-      var player = this.pendingKills[target];
-      delete this.pendingKills[target];
+    if (this.kills.pending[target]) {
+      var player = this.kills.pending[target];
+      delete this.kills.pending[target];
+      
+      data.success && this.kills.success++;
       
       return (player + (data.success ? " killed " : " failed to kill ") + target + ".");
     }
